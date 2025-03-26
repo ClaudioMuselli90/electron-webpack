@@ -26,18 +26,20 @@ export class HmrServer {
     this.state = false
   }
 
-  built(stats: Stats): void {
+  built(stats: Stats | undefined): void {
     this.state = true
     setImmediate(() => {
       if (!this.state) {
         return
       }
 
-      const hash = stats.toJson({assets: false, chunks: false, children: false, modules: false}).hash
-      if (debug.enabled) {
-        debug(`Send built: hash ${hash}`)
+      if (stats) {
+        const hash = stats.toJson({assets: false, chunks: false, children: false, modules: false}).hash
+        if (debug.enabled) {
+          debug(`Send built: hash ${hash}`)
+        }
+        this.ipc.emit("/built", {hash})
       }
-      this.ipc.emit("/built", {hash})
     })
   }
 }

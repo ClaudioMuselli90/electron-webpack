@@ -3,10 +3,22 @@
   "compilerOptions": {
     "outDir": "out",
     "baseUrl": "../packages",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "target": "ES2020",                          // Recommended target for modern JavaScript
+    "module": "ESNext",                          // Use ESNext for better tree-shaking and module resolution
+    "moduleResolution": "node",                  // Ensure compatibility with Node.js modules
+    "esModuleInterop": true,                     // Enables compatibility between CommonJS and ESModules
+    "resolveJsonModule": true,                   // Allows importing JSON files as modules
+    "strict": true,                              // Enable strict type checking for better safety
+    "declaration": false,                        // Keeps declarations off (set to `true` if declarations are needed)
+    "allowJs": true,                             // Allow JavaScript files to be included in the project
+    "skipDefaultLibCheck": true,                 // Skip default lib check to improve compilation performance
+    "forceConsistentCasingInFileNames": true     // Ensures consistent casing in file names
   },
-  "declaration": false,
   "include": [
     "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

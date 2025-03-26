@@ -8,6 +8,10 @@ export function configureVue(configurator: WebpackConfigurator) {
 
   configurator.extensions.push(".vue")
 
+  if (configurator.config.resolve!!.alias === undefined) {
+    configurator.config.resolve!!.alias = {}
+  }
+
   Object.assign(configurator.config.resolve!!.alias, {
     vue$: "vue/dist/vue.esm.js",
     "vue-router$": "vue-router/dist/vue-router.esm.js",

@@ -50,13 +50,15 @@ function addCustomResolver(configuration: Configuration) {
   }
 }
 
-function statToMatchObject(stats: Stats, projectDir: string, fs: MemoryFS) {
-  if (stats.hasErrors()) {
+function statToMatchObject(stats: Stats| undefined, projectDir: string, fs: MemoryFS) {
+  if (stats && stats.hasErrors()) {
     console.log(stats.toString({colors: true}))
     // console.log("FS data: " + util.inspect(fs, {colors: true}))
     throw new Error(stats.toJson().errors.join("\n"))
   }
-
+  if (stats === undefined) {
+    throw new Error("stats is undefined")
+  }
   // skip first 3 lines - Hash, Version and Time
   return stats.toString()
     .split(/\r?\n/)
@@ -73,7 +75,7 @@ function statToMatchObject(stats: Stats, projectDir: string, fs: MemoryFS) {
     .replace(new RegExp("[.]*/[^\n]+node_modules", "g"), "<some path>/node_modules")
 }
 
-function compile(fs: any, configuration: Configuration, resolve: (stats: Stats) => void, reject: (error?: Error) => void) {
+function compile(fs: any, configuration: Configuration, resolve: (stats: Stats | undefined) => void, reject: (error?: Error) => void) {
   const compiler = webpack(configuration)
   compiler.outputFileSystem = fs
   compiler.run((error, stats) => {

@@ -1,13 +1,13 @@
 {
-  "name": "electron-webpack-eslint",
+  "name": "@claw90/electron-webpack-eslint",
   "version": "6.0.0",
   "license": "MIT",
-  "author": "Greg Holguin <simulatedgreg@gmail.com>",
+  "author": "Claudio Muselli <claudio@muselli.it>",
   "files": [],
-  "repository": "electron-userland/electron-webpack",
+  "repository": "ClaudioMuselli90/electron-webpack",
   "dependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
+    "eslint": "^9.23.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^4.0.0"
   }

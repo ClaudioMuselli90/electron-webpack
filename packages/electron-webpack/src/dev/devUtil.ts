@@ -61,7 +61,7 @@ export function logProcess(label: "Electron" | "Renderer" | "Main", data: string
 
 export class DelayedFunction {
   private readonly executor: () => void
-  private handle: NodeJS.Timer | null = null
+  private handle: NodeJS.Timeout | null = null
 
   constructor(executor: () => void) {
     this.executor = () => {

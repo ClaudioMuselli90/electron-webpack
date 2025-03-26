@@ -1,8 +1,8 @@
 {
-  "name": "electron-webpack",
-  "private": true,
+  "name": "@claw90/electron-webpack",
   "license": "MIT",
-  "author": "Vladimir Krivosheev <develar@gmail.com>",
+  "author": "Claudio Muselli <claudio@muselli.it>",
+  "version":
   "scripts": {
     "compile": "cross-env ts-babel packages/electron-webpack test && yarn schema",
     "lint": "tslint -c ./node_modules/electron-builder-tslint-config/tslint.json -p packages/electron-webpack --exclude \"**/*.js\"",
@@ -15,36 +15,35 @@
     "update-deps": "npm-check-updates -u && npx lerna exec -- npm-check-updates -u"
   },
   "devDependencies": {
-    "@types/bluebird": "^3.5.30",
-    "@types/electron-devtools-installer": "^2.2.0",
-    "@types/fs-extra": "^8.1.0",
-    "@types/jest": "^25.2.1",
-    "@types/memory-fs": "^0.3.2",
-    "@types/node": "^13.11.0",
-    "@types/semver": "^7.1.0",
-    "@types/webpack": "^4.41.10",
-    "@types/webpack-merge": "^4.1.5",
-    "babel-preset-jest": "^25.2.6",
+    "@types/bluebird": "^3.5.42",
+    "@types/electron-devtools-installer": "^4.0.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/jest": "^29.5.14",
+    "@types/memory-fs": "^0.3.7",
+    "@types/node": "^22.13.13",
+    "@types/semver": "^7.5.8",
+    "@types/webpack": "^5.28.5",
+    "@types/webpack-merge": "^5.0.0",
+    "babel-preset-jest": "^29.6.3",
     "babel-preset-ts-node8": "^4.0.3",
-    "cross-env": "^7.0.2",
+    "cross-env": "^7.0.3",
     "electron-builder-tslint-config": "^1.1.0",
-    "fs-extra": "^9.0.0",
-    "jest-cli": "^25.2.7",
-    "jest-junit": "^10.0.0",
+    "fs-extra": "^11.3.0",
+    "jest-cli": "^29.7.0",
+    "jest-junit": "^16.0.0",
     "memory-fs": "^0.5.0",
-    "temp-file": "^3.3.7",
-    "terser-webpack-plugin": "^2.3.5",
+    "temp-file": "^3.4.0",
+    "terser-webpack-plugin": "^5.3.14",
     "ts-babel": "^6.1.7",
-    "ts-json-schema-generator": "^0.65.0",
-    "tslint": "^6.1.1",
-    "typescript": "^3.8.3",
-    "webpack": "^4.42.1"
+    "ts-json-schema-generator": "^2.3.0",
+    "typescript": "^5.8.2",
+    "webpack": "^5.98.0"
   },
   "workspaces": [
     "packages/*"
   ],
   "resolutions": {
-    "js-yaml": "^3.13.1"
+    "js-yaml": "^4.1.0"
   },
   "jest": {
     "globals": {

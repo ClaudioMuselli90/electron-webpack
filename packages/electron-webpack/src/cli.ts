@@ -21,8 +21,11 @@ function build(configFile: string) {
   // remove extra args
   args.length = 2
   if (!extraWebpackArgs.some(it => it.includes("--env.production"))) {
-    args.push("--env.production")
+    args.push("--env")
+    args.push("production")
   }
+
+  
   args.push("--progress")
   args.push(...extraWebpackArgs)
   args.push("--config", path.join(__dirname, "..", `webpack.${configFile}.config.js`))

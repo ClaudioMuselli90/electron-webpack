@@ -4,10 +4,9 @@ import dotEnvExpand from "dotenv-expand"
 import { pathExists, readJson } from "fs-extra"
 import { Lazy } from "lazy-val"
 import * as path from "path"
-import { validateConfig } from "read-config-file"
 import { deepAssign } from "read-config-file/out/deepAssign"
 import "source-map-support/register"
-import { Configuration, Plugin, RuleSetRule } from "webpack"
+import { Configuration, WebpackPluginInstance , RuleSetRule } from "webpack"
 import merge from "webpack-merge"
 import { getElectronWebpackConfiguration, getPackageMetadata } from "./config"
 import { configureTypescript } from "./configurators/ts"
@@ -76,7 +75,7 @@ export class WebpackConfigurator {
   }
 
   readonly rules: Array<RuleSetRule> = []
-  readonly plugins: Array<Plugin> = []
+  readonly plugins: Array<WebpackPluginInstance > = []
 
   // js must be first - e.g. iView has two files loading-bar.js and loading-bar.vue - when we require "loading-bar", js file must be resolved and not vue
   readonly extensions: Array<string> = [".js", ".json", ".node"]
@@ -257,7 +256,7 @@ export class WebpackConfigurator {
         return customModule(config, this)
       }
       else {
-        return merge.smart(config, customModule)
+        return merge(config, customModule)
       }
     }
 
@@ -303,8 +302,6 @@ export class WebpackConfigurator {
   }
 }
 
-const schemeDataPromise = new Lazy(() => readJson(path.join(__dirname, "..", "scheme.json")))
-
 export async function createConfigurator(type: ConfigurationType, env: ConfigurationEnv | null) {
   if (env != null) {
     // allow to pass as `--env.autoClean=false` webpack arg
@@ -332,17 +329,6 @@ export async function createConfigurator(type: ConfigurationType, env: Configura
   if (env.configuration != null) {
     deepAssign(electronWebpackConfig, env.configuration)
   }
-
-  await validateConfig(electronWebpackConfig, schemeDataPromise, message => {
-    return `${message}
-
-How to fix:
-1. Open https://webpack.electron.build/configuration
-2. Search the option name on the page.
-  * Not found? The option was deprecated or not exists (check spelling).
-  * Found? Check that the option in the appropriate place. e.g. "sourceDirectory" only in the "main" or "renderer", not in the root.
-`
-  })
   return new WebpackConfigurator(type, env, electronWebpackConfig, await packageMetadata.value)
 }
 
@@ -366,7 +352,7 @@ export async function configure(type: ConfigurationType, env: ConfigurationEnv |
   for (const file of dotenvFiles) {
     const exists = await pathExists(file)
     if (exists) {
-      dotEnvExpand(
+      dotEnvExpand.expand(
         dotEnvConfig({
           path: file
         })
@@ -396,7 +382,7 @@ async function getInstalledElectronVersion(projectDir: string) {
     try {
       return (await readJson(path.join(projectDir, "node_modules", name, "package.json"))).version
     }
-    catch (e) {
+    catch (e: any) {
       if (e.code !== "ENOENT") {
         throw e
       }
